@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BatMobile with threejs</title>
+
+    <script src="./js/three.min.js"></script>
+    <script src="./js/GLTFLoader.js"></script> 
+    <script src="./js/OrbitControls.js"></script> 
+    <style>
+    body{background:black;}
+    h1{  font-size: 72px;
+        background: -webkit-linear-gradient(black, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align:center;}</style>
+</head>
+<body>     
+    <h1>Batmobile with three.js</h1>
+    <div id="batmobile"></div>
+    <script>
+        
+    let scene, camera, renderer; 
+
+function init(){
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
+
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 1, 5000);
+    camera.rotation.y = 45/180*Math.PI;
+    camera.position.x = 800;
+    camera.position.y = 100;
+    camera.position.z = 1000; 
+
+    hLight = new THREE.AmbientLight(0x404040, 100);
+    scene.add(hLight);
+
+    directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(0,1,0);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+
+   
+    renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    let controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    const l1 = new THREE.PointLight( 0xff0000, 1, 100 );
+    l1.position.set( 50, 30, 50 );
+    scene.add( l1 );
+
+    const l2 = new THREE.PointLight( 0xff0000, 1, 100 );
+    l2.position.set( -50, 30, 0 );
+    scene.add( l2 );
+
+    const l3 = new THREE.PointLight( 0xff0000, 1, 100 );
+    l3.position.set( 0, 30, 50 );
+    scene.add( l3 );
+
+    const l4 = new THREE.PointLight( 0xff0000, 1, 100 );
+    l4.position.set( -50, 0, 30 );
+    scene.add( l4 );
+
+    
+
+    // const spotLight = new THREE.SpotLight( 0xffffff );
+    // spotLight.position.set( 100, 1000, 100 );
+
+    // spotLight.castShadow = true;
+
+    // spotLight.shadow.mapSize.width = 1024;
+    // spotLight.shadow.mapSize.height = 1024;
+
+    // spotLight.shadow.camera.near = 500;
+    // spotLight.shadow.camera.far = 4000;
+    // spotLight.shadow.camera.fov = 30;
+
+    // scene.add( spotLight );
+
+
+    const loader = new THREE.GLTFLoader();
+    loader.load('./model/scene.gltf', function(m){
+        car = m.scene.children[0];
+        car.scale.set(60,60,60);
+        scene.add(m.scene);
+        animate();
+    })
+}
+
+function animate(){
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+
+}
+init();
+
+    </script>
+</body>
+</html>
