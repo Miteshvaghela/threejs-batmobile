@@ -10,7 +10,7 @@
     <script src="./js/GLTFLoader.js"></script> 
     <script src="./js/OrbitControls.js"></script> 
     <style>
-    body{background:black;}
+    body{background:black; color:white;}
     h1{  font-size: 72px;
         background: -webkit-linear-gradient(black, white);
         -webkit-background-clip: text;
@@ -73,12 +73,12 @@ function init(){
 
     spotLight.castShadow = true;
 
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.mapSize.width = 993;
+    spotLight.shadow.mapSize.height = 993;
 
-    spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 4000;
-    spotLight.shadow.camera.fov = 30;
+    spotLight.shadow.camera.near = 300;
+    spotLight.shadow.camera.far = 3000;
+    spotLight.shadow.camera.fov = 60;
 
     scene.add( spotLight );
 
@@ -88,11 +88,11 @@ function init(){
         car = m.scene.children[0];
         car.scale.set(60,60,60);
         scene.add(m.scene);
-        animate();
+        animateObj();
     })
 }
 
-function animate(){
+function animateObj(){
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 
